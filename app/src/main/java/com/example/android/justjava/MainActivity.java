@@ -2,7 +2,9 @@ package com.example.android.justjava;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.text.NumberFormat;
@@ -34,8 +36,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void submitOrder(View view) {
+        CheckBox whippedCreamCheckbox = (CheckBox) findViewById(R.id.whipped_cream_checkbox);
+        boolean hasWhipepdCream = whippedCreamCheckbox.isChecked();
+
+        CheckBox chocolateCheckBox = (CheckBox) findViewById(R.id.chocolate_checkbox);
+        boolean haschocolate = chocolateCheckBox.isChecked();
+
+        Log.v("Main activity", "Has whipped cream:" + hasWhipepdCream);
         int price = calculatePrice();
-        String priceMessage = createOrderSummary(price);
+        String priceMessage = createOrderSummary(price, hasWhipepdCream, haschocolate);
         displayMessage(priceMessage);
 
     }
@@ -54,16 +63,21 @@ public class MainActivity extends AppCompatActivity {
         orderSummaryTextView.setText(message);
     }
     /**
-     * Calculates the price of the order.
+     * Create summary of the order.
      *
-     * @param /quantity is the number of cups of coffee ordered
+     * @param addWhippedCream is whether or not the user wants whipped cream topping
+     * @param addChocolate is whether or not the user wants whipped cream topping
+     * @param price of the order
+     * @return text summary
      */
     private int calculatePrice() {
         return quantity * 5;
     }
 
-    private String createOrderSummary(int price){
+    private String createOrderSummary(int price, boolean addWhippedCream, boolean addChocolate){
         String priceMessage = "Name: Kaptain Kunal";
+        priceMessage += "\nAdd whipped cream? " + addWhippedCream;
+        priceMessage += "\nAdd chocolate? " + addChocolate;
         priceMessage += "\nQuantity: " + quantity;
         priceMessage += "\nTotal: " + "$"+ price;
         priceMessage += "\nThank you";
